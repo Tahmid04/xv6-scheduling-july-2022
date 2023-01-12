@@ -1,5 +1,7 @@
 # Xv6 Scheduling
 
+**Updates: argptr() is now deprecated, refer to argaddr() for passing pointers to the kernel.**
+
 In this assignment, you will be implementing a new scheduler for the xv6 operating system. This scheduler will implement a [*lottery scheduling*](https://www.usenix.org/legacy/publications/library/proceedings/osdi/full_papers/waldspurger.pdf) algorithm. The basic idea is quite simple. Each process will be assigned a fixed number of tickets (an integer number). A process will be probabilistically assigned a time slice based on its number of tickets. 
 
 More specifically, if there are $n$ processes $p_1, p_2, \cdots, p_n$ and they have $t_1, t_2, \cdots, t_n$ tickets respectively at the beginning of a time slice, then a process $p_i$ has a probability of $\frac{t_i}{\sum_{j=1}^{n}t_j}$ of being scheduled at that time slice. You will basically sample $p_i$ based on the probability distribution derived from the ticket counts.
@@ -55,7 +57,7 @@ You will need to assign tickets to a process when it is created. Specifically, y
 
 ## Argument Passing
 
-Good examples of how to pass arguments into the kernel are found in existing system calls. In particular, follow the path of `read()`, which will lead you to `sys_read()`, which will show you how to use `argptr()` (and related calls) to obtain a pointer that has been passed into the kernel. Note how careful the kernel is with pointers passed from userspace -- they are a security threat(!) and thus must be checked very carefully before usage.
+Good examples of how to pass arguments into the kernel are found in existing system calls. In particular, follow the path of `read()`, which will lead you to `sys_read()`, which will show you how to use `argaddr()` (and related calls) to obtain a pointer that has been passed into the kernel. Note how careful the kernel is with pointers passed from userspace -- they are a security threat(!) and thus must be checked very carefully before usage.
 
 **For this particular offline set CPUS = 1 in the makefile of xv6.**
 
