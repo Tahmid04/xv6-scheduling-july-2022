@@ -1,12 +1,16 @@
 # Xv6 Scheduling
 
-**Updates: argptr() is now deprecated, refer to argaddr() for passing pointers to the kernel.**
+**Updates: 
+
+- argptr() is now deprecated, refer to argaddr() for passing pointers to the kernel.
+
+- Ticket update ambiguities cleared.**
 
 In this assignment, you will be implementing a new scheduler for the xv6 operating system. This scheduler will implement a [*lottery scheduling*](https://www.usenix.org/legacy/publications/library/proceedings/osdi/full_papers/waldspurger.pdf) algorithm. The basic idea is quite simple. Each process will be assigned a fixed number of tickets (an integer number). A process will be probabilistically assigned a time slice based on its number of tickets. 
 
 More specifically, if there are $n$ processes $p_1, p_2, \cdots, p_n$ and they have $t_1, t_2, \cdots, t_n$ tickets respectively at the beginning of a time slice, then a process $p_i$ has a probability of $\frac{t_i}{\sum_{j=1}^{n}t_j}$ of being scheduled at that time slice. You will basically sample $p_i$ based on the probability distribution derived from the ticket counts.
 
-At the end of that time slice, $t_i$ will be reduced by $1$ (i.e., the process will have used that ticket). Hence, the probabilities will have to be recomputed at the beginning of each time slice using the updated ticket counts. Once the ticket counts of **all** processes become $0$, their original ticket counts will be reinstated.
+At the end of that time slice, $t_i$ will be reduced by $1$ (i.e., the process will have used that ticket). Hence, the probabilities will have to be recomputed at the beginning of each time slice using the updated ticket counts. Once the ticket counts of **all running** processes become $0$, original ticket counts of **all** processes will be reinstated.
 
 ## System Calls
 
@@ -36,7 +40,7 @@ struct pstat {
 
     int inuse[NPROC]; // whether this slot of the process table is being used (1 or 0)
 
-    int tickets_original[NPROC]; // the number of tickets each process  originally had
+    int tickets_original[NPROC]; // the number of tickets each process originally had
 
     int tickets_current[NPROC]; // the number of tickets each process currently has
 
@@ -53,7 +57,7 @@ Most of the code for the scheduler is quite localized and can be found in `proc.
 
 ## Ticket Assignment
 
-You will need to assign tickets to a process when it is created. Specifically, you will need to ensure a child inherits the same number of tickets as its parents. Thus, if the parent has $42$ tickets and calls `fork()` to create a child process, the child should also get $42$ tickets.
+You will need to assign tickets to a process when it is created. Specifically, you will need to ensure a child inherits the same number of tickets as its parents. Thus, if the parent originally had $42$ tickets and calls `fork()` to create a child process, the child should also get $42$ tickets initially.
 
 ## Argument Passing
 
