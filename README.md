@@ -1,10 +1,10 @@
 # Xv6 Scheduling
 
-**Updates: 
+**Updates:** 
 
-- argptr() is now deprecated, refer to argaddr() for passing pointers to the kernel.
+**- argptr() is now deprecated, refer to argaddr() for passing pointers to the kernel.**
 
-- Ticket update ambiguities cleared.**
+**- Ticket update ambiguities cleared.**
 
 In this assignment, you will be implementing a new scheduler for the xv6 operating system. This scheduler will implement a [*lottery scheduling*](https://www.usenix.org/legacy/publications/library/proceedings/osdi/full_papers/waldspurger.pdf) algorithm. The basic idea is quite simple. Each process will be assigned a fixed number of tickets (an integer number). A process will be probabilistically assigned a time slice based on its number of tickets. 
 
