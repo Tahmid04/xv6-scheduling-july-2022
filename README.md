@@ -10,7 +10,7 @@ In this assignment, you will be implementing a new scheduler for the xv6 operati
 
 More specifically, if there are $n$ processes $p_1, p_2, \cdots, p_n$ and they have $t_1, t_2, \cdots, t_n$ tickets respectively at the beginning of a time slice, then a process $p_i$ has a probability of $\frac{t_i}{\sum_{j=1}^{n}t_j}$ of being scheduled at that time slice. You will basically sample $p_i$ based on the probability distribution derived from the ticket counts.
 
-At the end of that time slice, $t_i$ will be reduced by $1$ (i.e., the process will have used that ticket). Hence, the probabilities will have to be recomputed at the beginning of each time slice using the updated ticket counts. Once the ticket counts of **all running** processes become $0$, original ticket counts of **all** processes will be reinstated.
+At the end of that time slice, $t_i$ will be reduced by $1$ (i.e., the process will have used that ticket). Hence, the probabilities will have to be recomputed at the beginning of each time slice using the updated ticket counts. Once the ticket counts of **all runnable** processes become $0$, original ticket counts of **all** processes will be reinstated.
 
 ## System Calls
 
